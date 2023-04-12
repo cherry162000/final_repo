@@ -3,7 +3,6 @@ from flask import Flask, request, abort, jsonify,render_template,redirect
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 from models import setup_db, Movie, Actor
-import requests
 from authlib.integrations.flask_client import OAuth
 from auth import AuthError, requires_auth
 import secrets
