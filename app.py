@@ -7,7 +7,6 @@ import requests
 from authlib.integrations.flask_client import OAuth
 from auth import AuthError, requires_auth
 import secrets
-import os
 
 # Load Auth0 credentials from environment variables
 auth0_domain = os.environ.get('AUTH0_DOMAIN')

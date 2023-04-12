@@ -2,13 +2,11 @@ import os
 from sqlalchemy import Column, String, Integer, create_engine, ForeignKey
 from flask_sqlalchemy import SQLAlchemy
 import json
-from dotenv import load_dotenv
 from sqlalchemy.orm import relationship
 
-load_dotenv()
-database = os.getenv("DATABASE")
-password = os.getenv("PASSWORD")
-hostname = os.getenv("HOSTNAME")
+database = os.environ.get("DATABASE")
+password = os.environ.get("PASSWORD")
+hostname = os.environ.get("HOSTNAME")
 
 database_name = 'casting_agency'
 database_path = "postgresql://{}:{}@{}/{}".format(database,password,hostname, database_name)
