@@ -4,12 +4,8 @@ from flask_sqlalchemy import SQLAlchemy
 import json
 from sqlalchemy.orm import relationship
 
-database = os.environ.get("DATABASE")
-password = os.environ.get("PASSWORD")
-hostname = os.environ.get("HOSTNAME")
-
-database_name = 'casting_agency'
-database_path = "postgresql://{}:{}@{}/{}".format(database,password,hostname, database_name)
+database_path = os.environ.get("DATABASE_URL")
+print("data path_____________",database_path)
 if database_path.startswith("postgres://"):
   database_path = database_path.replace("postgres://", "postgresql://", 1)
 
@@ -20,7 +16,7 @@ setup_db(app)
     binds a flask application and a SQLAlchemy service
 """
 def setup_db(app, database_path=database_path):
-    app.config["SQLALCHEMY_DATABASE_URI"] = database_path
+    app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL")
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
     with app.app_context():
         db.app = app
