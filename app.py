@@ -10,35 +10,12 @@ from flask_cors import CORS
 from models import setup_db, Movie, Actor
 from authlib.integrations.flask_client import OAuth
 from auth import AuthError, requires_auth
-import secrets
 import requests
 
-# # Load Auth0 credentials from environment variables
-# auth0_domain = os.environ.get('AUTH0_DOMAIN')
-# auth0_client_id = os.environ.get('AUTH0_CLIENT_ID')
-# auth0_client_secret = os.environ.get('AUTH0_CLIENT_SECRET')
-
-
-
-# oauth = OAuth()
-
-# auth0 = oauth.register(
-#     'auth0',
-#     client_id=os.getenv('AUTH0_CLIENT_ID'),
-#     client_secret=os.getenv('AUTH0_CLIENT_SECRET'),
-#     api_base_url='https://{domain}'.format(domain=os.getenv('AUTH0_DOMAIN')),
-#     access_token_url='https://{domain}/oauth/token'.format(domain=os.getenv('AUTH0_DOMAIN')),
-#     authorize_url='https://{domain}/authorize'.format(domain=os.getenv('AUTH0_DOMAIN')),
-#     client_kwargs={
-#         'scope': 'openid profile email',
-#     },
-# )
 
 def create_app(test_config=None):
     # create and configure the app
     app = Flask(__name__)
-    # app.secret_key = secrets.token_urlsafe(16)
-    # oauth.init_app(app)
     setup_db(app)
 
     CORS(app)
@@ -53,7 +30,7 @@ def create_app(test_config=None):
 
     @app.route('/')
     def welcome():
-        return"Welcome to CASTING AGENCY"
+        return"Welcome to CASTING AGENCY!!!"
    
     @app.route('/movies', methods=['GET'])
     @requires_auth('get:movies')
@@ -61,8 +38,8 @@ def create_app(test_config=None):
         try:
             select_movies = Movie.query.order_by(Movie.id).all()   
             format_movies = [movies.format() for movies in select_movies]
-            print("Select movies:",select_movies)
-            print("format movies:",format_movies)
+            # print("Select movies:",select_movies)
+            # print("format movies:",format_movies)
             if len(select_movies) ==0:
                 abort(404)
             else:    
@@ -71,7 +48,7 @@ def create_app(test_config=None):
                 'movies':format_movies
             })
         except Exception as e:
-            print("get movies exception",e)
+            abort(404)
 
     @app.route('/actors', methods=['GET'])
     @requires_auth('get:actors')
@@ -88,7 +65,7 @@ def create_app(test_config=None):
                 'actors':format_actors
             })
         except Exception as e:
-            print("get actors exception",e)
+            abort(404)
 
     @app.route('/movies', methods=['POST'])
     @requires_auth('post:movies')
@@ -155,7 +132,6 @@ def create_app(test_config=None):
                 'deleted':movie_id
                 })
         except Exception as e:
-            print("Delete Exception_________",e)
             abort(422)
        
 
@@ -174,7 +150,6 @@ def create_app(test_config=None):
                 'deleted':actor_id
                 })
         except Exception as e:
-            print("Delete Exception actors______________",e)
             abort(422) 
 
     @app.route('/movies/<int:movie_id>', methods=['PATCH'])

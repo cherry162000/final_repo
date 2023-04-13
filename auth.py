@@ -5,8 +5,6 @@ from jose import jwt
 from urllib.request import urlopen
 import os
 
-
-# AUTH0_DOMAIN = 'udacity-project-fswd.us.auth0.com'
 auth0_domain = os.environ.get('AUTH0_DOMAIN')
 algorithms = os.environ.get('ALGORITHMS')
 api_audience = os.environ.get('API_AUDIENCE')

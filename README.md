@@ -15,6 +15,7 @@ pip3 install -r requirements.txt
 This project uses SQLAlchemy as backend database to store and retrive the data of the movies and actors.
 
 This project is hosted on a cloud plaftform called Render.
+Render https://render-deployment-udacity.onrender.com
 
 This project uses Auth0 for authentication and added users and roles under that users, which consists of set of permissions which limits the access of the data.
 
