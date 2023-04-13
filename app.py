@@ -13,32 +13,32 @@ from auth import AuthError, requires_auth
 import secrets
 import requests
 
-# Load Auth0 credentials from environment variables
-auth0_domain = os.environ.get('AUTH0_DOMAIN')
-auth0_client_id = os.environ.get('AUTH0_CLIENT_ID')
-auth0_client_secret = os.environ.get('AUTH0_CLIENT_SECRET')
+# # Load Auth0 credentials from environment variables
+# auth0_domain = os.environ.get('AUTH0_DOMAIN')
+# auth0_client_id = os.environ.get('AUTH0_CLIENT_ID')
+# auth0_client_secret = os.environ.get('AUTH0_CLIENT_SECRET')
 
 
 
-oauth = OAuth()
+# oauth = OAuth()
 
-auth0 = oauth.register(
-    'auth0',
-    client_id=os.getenv('AUTH0_CLIENT_ID'),
-    client_secret=os.getenv('AUTH0_CLIENT_SECRET'),
-    api_base_url='https://{domain}'.format(domain=os.getenv('AUTH0_DOMAIN')),
-    access_token_url='https://{domain}/oauth/token'.format(domain=os.getenv('AUTH0_DOMAIN')),
-    authorize_url='https://{domain}/authorize'.format(domain=os.getenv('AUTH0_DOMAIN')),
-    client_kwargs={
-        'scope': 'openid profile email',
-    },
-)
+# auth0 = oauth.register(
+#     'auth0',
+#     client_id=os.getenv('AUTH0_CLIENT_ID'),
+#     client_secret=os.getenv('AUTH0_CLIENT_SECRET'),
+#     api_base_url='https://{domain}'.format(domain=os.getenv('AUTH0_DOMAIN')),
+#     access_token_url='https://{domain}/oauth/token'.format(domain=os.getenv('AUTH0_DOMAIN')),
+#     authorize_url='https://{domain}/authorize'.format(domain=os.getenv('AUTH0_DOMAIN')),
+#     client_kwargs={
+#         'scope': 'openid profile email',
+#     },
+# )
 
 def create_app(test_config=None):
     # create and configure the app
     app = Flask(__name__)
-    app.secret_key = secrets.token_urlsafe(16)
-    oauth.init_app(app)
+    # app.secret_key = secrets.token_urlsafe(16)
+    # oauth.init_app(app)
     setup_db(app)
 
     CORS(app)
@@ -56,8 +56,8 @@ def create_app(test_config=None):
         return"Welcome to CASTING AGENCY"
    
     @app.route('/movies', methods=['GET'])
-    @requires_auth('get:movies')
-    def get_movies(payload):
+    # @requires_auth('get:movies')
+    def get_movies():
         try:
             select_movies = Movie.query.order_by(Movie.id).all()   
             format_movies = [movies.format() for movies in select_movies]
