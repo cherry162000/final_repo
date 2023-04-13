@@ -56,8 +56,8 @@ def create_app(test_config=None):
         return"Welcome to CASTING AGENCY"
    
     @app.route('/movies', methods=['GET'])
-    # @requires_auth('get:movies')
-    def get_movies():
+    @requires_auth('get:movies')
+    def get_movies(payload):
         try:
             select_movies = Movie.query.order_by(Movie.id).all()   
             format_movies = [movies.format() for movies in select_movies]
